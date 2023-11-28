@@ -80,17 +80,19 @@ const removeFileAsync = async (pathToFile) => {
     })
 }
 
+const listNums = async () => {
+    for (let i = 0; i < text.split(" ").length; i++) {
+        await appendFileAsync(processedNumFilePath, "\n" + (i + 1) + ") " + text.split(" ")[i])
+    }
+}
+
 readFileAsync(numFilePath)
     .then(() => writeFileAsync(processedNumFilePath, count.toString()))
     .then(() => readFileAsync(processedNumFilePath))
     .then(() => writeFileAsync(numFilePath, text))
     .then(() => appendFileAsync(processedNumFilePath, "\nMaximum number is: " + max.toString()))
     .then(() => appendFileAsync(processedNumFilePath, "\nAverage: " + (sum/count).toString()))
-    .then(() => {
-        for (let i = 0; i < text.split(" ").length; i++) {
-            appendFileAsync(processedNumFilePath, "\n" + (i + 1) + ") " + text.split(" ")[i])
-        }
-    })
+    .then(() => listNums())
     
 // renameFileAsync(numFilePath, oldNumFilePath)
 
