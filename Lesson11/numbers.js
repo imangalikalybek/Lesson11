@@ -3,6 +3,7 @@ const path = require("path");
 
 const numFilePath = path.join(__dirname, "numbers.txt"); // file content 
 const processedNumFilePath = path.join(__dirname, "processed_numbers.txt");
+const oldNumFilePath = path.join(__dirname, "old_numbers.txt");
 var text;
 var numArr;
 var count;
@@ -57,6 +58,17 @@ const appendFileAsync = async (pathToFile, data) => {
     })
 }
 
+const renameFileAsync = async (pathToFile, data) => {
+    return new Promise((resolve, reject) => {
+        fs.renameFile(pathToFile, data, (err, data) => {
+            if (err) {
+                reject(err);
+            } 
+            resolve(data);
+        })
+    })
+}
+
 const removeFileAsync = async (pathToFile) => {
     return new Promise((resolve, reject) => {
         fs.rm(pathToFile,(err, data) => {
@@ -79,7 +91,8 @@ readFileAsync(numFilePath)
             appendFileAsync(processedNumFilePath, "\n" + (i + 1) + ") " + text.split(" ")[i])
         }
     })
-
+    
+// renameFileAsync(numFilePath, oldNumFilePath)
 
 /*
 readFileAsync(textFilePath)
